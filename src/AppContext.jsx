@@ -1,14 +1,35 @@
-import { createContext, useState } from 'react';
+import { createContext, useReducer } from "react";
 
-export const AppContext  = createContext();
+export const AppContext = createContext();
+const initialState = {
+  count: 0,
+};
+
+function reducer(state, action) {
+  const _state = { ...state };
+  switch (action) {
+    case "increaseCount":
+      _state.count++;
+      break;
+    case "decreaseCount":
+      _state.count--;
+      break;
+  }
+
+  return _state;
+}
 
 export const AppProvider = ({ children }) => {
-	const [count, setCount] = useState(1);
-	
-	return (
-		<AppContext.Provider value={{
-			count,
-			setCount
-		}}>{children}</AppContext.Provider>
-	)
-}
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <AppContext.Provider
+      value={{
+        state,
+        dispatch,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
