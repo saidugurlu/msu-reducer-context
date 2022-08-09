@@ -1,19 +1,20 @@
 import axios from "axios";
-import { createContext, useReducer,useEffect } from "react";
-
- 
+import { createContext, useReducer, useEffect } from "react";
 
 export const AppContext = createContext();
 const initialState = {
   count: 0,
-  germanNouns: []
+  germanNouns: [],
 };
 
-function reducer(state, action) { //action is an object with a type property and a payload property
+function reducer(state, action) {
+  // action = { type: "loadGermanNouns", payload: _germanNouns }
+  // action = { type: "increaseCount"}
+  //action is an object with a type property and a payload property
   const _state = { ...state };
   let item = null;
-	let property = null;
-	let value = null;
+  let property = null;
+  let value = null;
   switch (action.type) {
     case "increaseCount":
       _state.count++;
@@ -21,42 +22,41 @@ function reducer(state, action) { //action is an object with a type property and
     case "decreaseCount":
       _state.count--;
       break;
-      case 'loadGermanNouns':
-        _state.germanNouns = action.payload;//action.payload is the data that is returned from the server
-        break;
-        case 'toggleEditStatus':
-          item = action.payload;
-          item.isEditing = !item.isEditing;
-          item.message = item.isEditing ? 'Editing item...' : '';
-          break;
-          case 'changeItemRowValue':
-            item = action.payload.item;
-            property = action.payload.property;
-            value = action.payload.value;
-            item[property] = value;
-            break;
-      
-        }
-        return _state;
+    case "loadGermanNouns":
+      _state.germanNouns = action.payload; //action.payload is the data that is returned from the server
+      break;
+    case "toggleEditStatus":
+      item = action.payload;
+      item.isEditing = !item.isEditing;
+      item.message = item.isEditing ? "Editing item..." : "";
+      break;
+    case "changeItemRowValue":
+      item = action.payload.item;
+      property = action.payload.property;
+      value = action.payload.value;
+      item[property] = value;
+      break;
+  }
+  return _state;
 }
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-
   useEffect(() => {
-		(async () => {
-			const _germanNouns = ((await axios.get('http://localhost:4555/germanNouns')).data);
+    (async () => {
+      const _germanNouns = (
+        await axios.get("http://localhost:4555/germanNouns")
+      ).data;
 
-      _germanNouns.forEach(noun => {
-				noun.isEditing = false;
-        noun.message = '';
-			})
+      _germanNouns.forEach((noun) => {
+        noun.isEditing = false;
+        noun.message = "";
+      });
 
-			dispatch({ type: 'loadGermanNouns', payload: _germanNouns });
-      
-		})();
-	}, []);
+      dispatch({ type: "loadGermanNouns", payload: _germanNouns });
+    })();
+  }, []);
 
   return (
     <AppContext.Provider
