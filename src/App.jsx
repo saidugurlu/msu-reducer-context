@@ -12,17 +12,19 @@ function App() {
       <div className="buttonArea">
                 <button
                     className="decrease"
-                    onClick={() => dispatch("decreaseCount")}
+                    onClick={() => dispatch({type: "decreaseCount"})}
                 >
                     -
                 </button>
                 <button
                     className="increase"
-                    onClick={() => dispatch("increaseCount")}
+                    onClick={() => dispatch({type:"increaseCount"})}
                 >
                     +
                 </button>
             </div>
+            <hr/>
+		<p>There are {state.germanNouns.length} nouns.</p>
 		</div>
 	);
 }
