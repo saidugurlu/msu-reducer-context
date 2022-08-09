@@ -24,9 +24,9 @@ function reducer(state, action) { //action is an object with a type property and
         case 'toggleEditStatus':
           const item = action.payload;
           item.isEditing = !item.isEditing;
-  }
-
-  return _state;
+          item.message = item.isEditing ? 'Editing item...' : '';
+      }
+      return _state;
 }
 
 export const AppProvider = ({ children }) => {
@@ -39,6 +39,7 @@ export const AppProvider = ({ children }) => {
 
       _germanNouns.forEach(noun => {
 				noun.isEditing = false;
+        noun.message = '';
 			})
 
 			dispatch({ type: 'loadGermanNouns', payload: _germanNouns });

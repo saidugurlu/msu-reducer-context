@@ -32,20 +32,37 @@ function App() {
             <fieldset className="germanNoun" key={i}>
               <legend>ID: {item.id}</legend>
 
-              <GermanNounFormRow item={item} label="Article" variable="article" />
+              <GermanNounFormRow
+                item={item}
+                label="Article"
+                variable="article"
+              />
 
-<GermanNounFormRow item={item} label="Singular" variable="singular" />
+              <GermanNounFormRow
+                item={item}
+                label="Singular"
+                variable="singular"
+              />
 
-<GermanNounFormRow item={item} label="Plural" variable="plural" />
+              <GermanNounFormRow item={item} label="Plural" variable="plural" />
 
               <div className="buttonRow">
-              {item.isEditing && <span>Please edit...</span>}
-								<button onClick={() => dispatch({type: 'toggleEditStatus', payload: item})}>
-									Edit
-								</button>
-                <button>Delete</button>
-                <button>Add</button>
-              </div>
+              <div className="message">{item.message}</div>
+								<div className="buttonArea">
+									<button
+										onClick={() =>
+											dispatch({
+												type: 'toggleEditStatus',
+												payload: item,
+											})
+										}
+									>
+										Edit
+									</button>
+									<button>Delete</button>
+									<button>Add</button>
+								</div>
+							</div>
             </fieldset>
           );
         })}
