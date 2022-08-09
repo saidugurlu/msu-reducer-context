@@ -47,7 +47,10 @@ function App() {
               </div>
 
               <div className="buttonRow">
-                <button>Edit</button>
+              {item.isEditing && <span>Please edit...</span>}
+								<button onClick={() => dispatch({type: 'toggleEditStatus', payload: item})}>
+									Edit
+								</button>
                 <button>Delete</button>
                 <button>Add</button>
               </div>

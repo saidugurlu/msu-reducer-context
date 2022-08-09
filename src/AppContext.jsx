@@ -20,6 +20,9 @@ function reducer(state, action) { //action is an object with a type property and
       case 'loadGermanNouns':
         _state.germanNouns = action.payload;//action.payload is the data that is returned from the server
         break;
+        case 'toggleEditStatus':
+          const item = action.payload;
+          item.isEditing = !item.isEditing;
   }
 
   return _state;
@@ -32,7 +35,13 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
 		(async () => {
 			const _germanNouns = ((await axios.get('http://localhost:4555/germanNouns')).data);
+
+      _germanNouns.forEach(noun => {
+				noun.isEditing = false;
+			})
+      
 			dispatch({ type: 'loadGermanNouns', payload: _germanNouns });
+      
 		})();
 	}, []);
 
