@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
 import "./App.scss";
+import { GermanNounFormRow } from "./components/GermanNounFormRow";
 
 function App() {
   const { state, dispatch } = useContext(AppContext);
@@ -31,20 +32,11 @@ function App() {
             <fieldset className="germanNoun" key={i}>
               <legend>ID: {item.id}</legend>
 
-              <div className="row">
-                <label htmlFor="article">Article</label>
-                <div className="value">{item.article}</div>
-              </div>
+              <GermanNounFormRow item={item} label="Article" variable="article" />
 
-              <div className="row">
-                <label htmlFor="singular">Singular</label>
-                <div className="value">{item.singular}</div>
-              </div>
+<GermanNounFormRow item={item} label="Singular" variable="singular" />
 
-              <div className="row">
-                <label htmlFor="plural">Plural</label>
-                <div className="value">{item.plural}</div>
-              </div>
+<GermanNounFormRow item={item} label="Plural" variable="plural" />
 
               <div className="buttonRow">
               {item.isEditing && <span>Please edit...</span>}

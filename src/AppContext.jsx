@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useReducer,useEffect } from "react";
 
+ 
 
 export const AppContext = createContext();
 const initialState = {
@@ -39,7 +40,7 @@ export const AppProvider = ({ children }) => {
       _germanNouns.forEach(noun => {
 				noun.isEditing = false;
 			})
-      
+
 			dispatch({ type: 'loadGermanNouns', payload: _germanNouns });
       
 		})();
