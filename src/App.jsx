@@ -26,30 +26,35 @@ function App() {
       <hr />
       <p>There are {state.germanNouns.length} nouns.</p>
       <div className="germanNounArea">
-    {state.germanNouns.map((item, i) => {
-        return (
+        {state.germanNouns.map((item, i) => {
+          return (
             <fieldset className="germanNoun" key={i}>
-                <legend>ID: {item.id}</legend>
- 
-                <div className="row">
-                    <label htmlFor="article">Article</label>
-                    <div className="value">{item.article}</div>
-                </div>
- 
-                <div className="row">
-                    <label htmlFor="singular">Singular</label>
-                    <div className="value">{item.singular}</div>
-                </div>
- 
-                <div className="row">
-                    <label htmlFor="plural">Plural</label>
-                    <div className="value">{item.plural}</div>
-                </div>
- 
+              <legend>ID: {item.id}</legend>
+
+              <div className="row">
+                <label htmlFor="article">Article</label>
+                <div className="value">{item.article}</div>
+              </div>
+
+              <div className="row">
+                <label htmlFor="singular">Singular</label>
+                <div className="value">{item.singular}</div>
+              </div>
+
+              <div className="row">
+                <label htmlFor="plural">Plural</label>
+                <div className="value">{item.plural}</div>
+              </div>
+
+              <div className="buttonRow">
+                <button>Edit</button>
+                <button>Delete</button>
+                <button>Add</button>
+              </div>
             </fieldset>
-        );
-    })}
-</div>
+          );
+        })}
+      </div>
     </div>
   );
 }

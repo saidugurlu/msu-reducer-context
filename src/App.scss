@@ -78,4 +78,13 @@ body {
 			}
 		}
 	}
+
+	.buttonRow {
+		text-align: right;
+		background-color: #4a4a4a;
+		padding: .3rem .3rem .7rem .3rem;
+		button {
+			margin-right: .3rem;
+		}
+	}
 }
