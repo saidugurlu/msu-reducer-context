@@ -11,6 +11,9 @@ const initialState = {
 
 function reducer(state, action) { //action is an object with a type property and a payload property
   const _state = { ...state };
+  let item = null;
+	let property = null;
+	let value = null;
   switch (action.type) {
     case "increaseCount":
       _state.count++;
@@ -22,11 +25,19 @@ function reducer(state, action) { //action is an object with a type property and
         _state.germanNouns = action.payload;//action.payload is the data that is returned from the server
         break;
         case 'toggleEditStatus':
-          const item = action.payload;
+          item = action.payload;
           item.isEditing = !item.isEditing;
           item.message = item.isEditing ? 'Editing item...' : '';
-      }
-      return _state;
+          break;
+          case 'changeItemRowValue':
+            item = action.payload.item;
+            property = action.payload.property;
+            value = action.payload.value;
+            item[property] = value;
+            break;
+      
+        }
+        return _state;
 }
 
 export const AppProvider = ({ children }) => {
