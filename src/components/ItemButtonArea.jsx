@@ -8,7 +8,7 @@ export const ItemButtonArea = ({ item, dispatch }) => {
 							onClick={() =>
 								dispatch({
 									type: 'toggleEditStatus',
-									payload: item,
+									payload: { item },
 								})
 							}
 						>
@@ -30,16 +30,14 @@ export const ItemButtonArea = ({ item, dispatch }) => {
 						>
 							Cancel
 						</button>
-                        <button
+						<button
 							onClick={() =>
 								dispatch({
 									type: 'saveItem',
 									payload: { item },
 								})
 							}
-						>
-							Save
-						</button>
+						>Save</button>
 					</>
 				)}
 			</div>

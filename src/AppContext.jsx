@@ -1,6 +1,8 @@
 import { createContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
 
+const baseUrl = 'http://localhost:4555';
+
 export const AppContext = createContext();
 
 const initialState = {
@@ -23,10 +25,10 @@ function reducer(state, action) {
 			_state.count--;
 			break;
 		case 'loadGermanNouns':
-			_state.germanNouns = action.payload;
+			_state.germanNouns = action.payload.germanNouns;
 			break;
 		case 'toggleEditStatus':
-			item = action.payload;
+			item = action.payload.item;
 			item.isEditing = !item.isEditing;
 			item.message = item.isEditing ? 'Editing item...' : '';
 			break;
@@ -73,14 +75,14 @@ export const AppProvider = ({ children }) => {
 	useEffect(() => {
 		(async () => {
 			const _germanNouns = (
-				await axios.get('http://localhost:4555/germanNouns')
+				await axios.get(`${baseUrl}/germanNouns`)
 			).data;
 			_germanNouns.forEach((noun) => {
 				noun.isEditing = false;
 				noun.message = '';
 				noun.originalItem = { ...noun };
 			});
-			dispatchCore({ type: 'loadGermanNouns', payload: _germanNouns });
+			dispatchCore({ type: 'loadGermanNouns', payload: { germanNouns: _germanNouns } });
 		})();
 	}, []);
 
@@ -99,7 +101,7 @@ export const AppProvider = ({ children }) => {
 			case 'saveItem':
 				try {
 					const response = await axios.put(
-						`http://localhost:4555/germanNouns/${item.id}`,
+						`${baseUrl}/germanNouns/${item.id}`,
 						backendItem
 					);
 					if ([200, 201].includes(response.status)) {
