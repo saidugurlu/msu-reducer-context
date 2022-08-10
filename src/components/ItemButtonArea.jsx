@@ -30,7 +30,16 @@ export const ItemButtonArea = ({ item, dispatch }) => {
 						>
 							Cancel
 						</button>
-                        <button>Save</button>
+                        <button
+							onClick={() =>
+								dispatch({
+									type: 'saveItem',
+									payload: { item },
+								})
+							}
+						>
+							Save
+						</button>
 					</>
 				)}
 			</div>

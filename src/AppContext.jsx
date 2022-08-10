@@ -45,6 +45,11 @@ function reducer(state, action) {
 			item.singular = originalItem.singular;
 			item.plural = originalItem.plural;
 			break;
+      case "saveItem":
+        item = action.payload.item;
+        item.isEditing = false;
+        item.message = '';
+        break;
 	}
 	return _state;
 }
