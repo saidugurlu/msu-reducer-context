@@ -1,4 +1,4 @@
-export const ItemButtonArea = ({item, dispatch}) => {
+export const ItemButtonArea = ({ item, dispatch }) => {
 	return (
 		<>
 			<div className="buttonArea">
@@ -20,8 +20,17 @@ export const ItemButtonArea = ({item, dispatch}) => {
 				)}
 				{item.isEditing && (
 					<>
-						<button>Clear</button>
-						<button>Save</button>
+						<button
+							onClick={() =>
+								dispatch({
+									type: 'cancelEditStatus',
+									payload: { item },
+								})
+							}
+						>
+							Cancel
+						</button>
+                        <button>Save</button>
 					</>
 				)}
 			</div>
