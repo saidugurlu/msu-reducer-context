@@ -87,7 +87,7 @@ export const AppProvider = ({ children }) => {
 	}, []);
 
 	const dispatch = async (action) => {
-		const item = action.payload.item;
+		const item = action.payload?.item;
 		let backendItem = {};
 		if (item) {
 			backendItem = {
