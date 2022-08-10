@@ -2,7 +2,7 @@ export const ItemButtonArea = ({ item, dispatch }) => {
 	return (
 		<>
 			<div className="buttonArea">
-				{!item.isEditing && (
+				{!item.isEditing && !item.isDeleting && (
 					<>
 						<button
 							onClick={() =>
@@ -14,7 +14,7 @@ export const ItemButtonArea = ({ item, dispatch }) => {
 						>
 							Edit
 						</button>
-						<button>Delete</button>
+						<button onClick={() => dispatch({type: 'askIfSureForDelete', payload: {item}})}>Delete</button>
 						<button>Add</button>
 					</>
 				)}
@@ -38,6 +38,28 @@ export const ItemButtonArea = ({ item, dispatch }) => {
 								})
 							}
 						>Save</button>
+					</>
+				)}
+				{item.isDeleting && (
+					<>
+						<button
+							onClick={() =>
+								dispatch({
+									type: 'cancelDeleteStatus',
+									payload: { item },
+								})
+							}
+						>
+							Cancel
+						</button>
+						<button
+							onClick={() =>
+								dispatch({
+									type: 'deleteItem',
+									payload: { item },
+								})
+							}
+						>Yes, delete item!</button>
 					</>
 				)}
 			</div>

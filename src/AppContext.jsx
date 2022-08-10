@@ -48,6 +48,12 @@ function reducer(state, action) {
 			item.singular = originalItem.singular;
 			item.plural = originalItem.plural;
 			break;
+		case 'cancelDeleteStatus':
+			item = action.payload.item;
+
+			item.isDeleting = false;
+			item.message = '';
+			break;
 		case 'saveItem':
 			item = action.payload.item;
 
@@ -65,6 +71,16 @@ function reducer(state, action) {
 			item.singular = originalItem.singular;
 			item.plural = originalItem.plural;
 			break;
+		case 'askIfSureForDelete':
+			item = action.payload.item;
+			
+			item.isDeleting = true;
+			break;
+		case 'deleteItem':
+			item = action.payload.item;
+			
+			_state.germanNouns = [...state.germanNouns.filter(m => m.id !== item.id)];
+			break;
 	}
 	return _state;
 }
@@ -79,6 +95,7 @@ export const AppProvider = ({ children }) => {
 			).data;
 			_germanNouns.forEach((noun) => {
 				noun.isEditing = false;
+				noun.isDeleting = false;
 				noun.message = '';
 				noun.originalItem = { ...noun };
 			});
