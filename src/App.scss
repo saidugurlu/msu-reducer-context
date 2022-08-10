@@ -1,5 +1,5 @@
 body {
-  background-color: #333;
+  background-color: rgb(54, 52, 78);
   color: #eee;
   font-family: sans-serif;
   padding: 1rem;
@@ -7,7 +7,7 @@ body {
 
   h1 {
     font-size: 2.6rem;
-    color: #aaa;
+    color: rgb(226, 219, 219);
   }
 
   h2 {
@@ -37,16 +37,16 @@ body {
 
   .germanNounArea {
     fieldset.germanNoun {
-      background-color: #444;
+      background-color: rgb(69, 73, 105);
       margin-bottom: 1rem;
       padding: 1rem;
       border: 1px solid #666;
-      color: rgb(226, 226, 144);
+      color: rgb(232, 232, 59);
       max-width: 38rem;
 
       legend {
         font-size: 1rem;
-        color: #aaa;
+        color: rgb(193, 156, 156);
         font-family: monospace;
       }
 
@@ -81,7 +81,7 @@ body {
 
   .buttonRow {
     text-align: right;
-    background-color: #4a4a4a;
+    background-color: #3e4049;
     padding: 0.3rem 0.3rem 0.7rem 0.3rem;
     display: flex;
     justify-content: space-between;
