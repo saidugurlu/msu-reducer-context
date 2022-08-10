@@ -49,6 +49,17 @@ function reducer(state, action) {
       item.isEditing = false;
       item.message = "";
       break;
+    case "handleFailedSave":
+      item = action.payload.item;
+      originalItem = item.originalItem;
+
+      item.isEditing = false;
+      item.message = "Failed to save item.";
+      item.article = originalItem.article;
+      item.singular = originalItem.singular;
+      item.plural = originalItem.plural;
+      break;
+      e;
   }
   return _state;
 }
@@ -72,25 +83,30 @@ export const AppProvider = ({ children }) => {
 
   const dispatch = async (action) => {
     const item = action.payload.item;
-		let backendItem = {};
-		if (item) {
-			backendItem = {
-				id: item.id,
-				article: item.article,
-				singular: item.singular,
-				plural: item.plural,
-			};
-		}
-		switch (action.type) {
-			case 'saveItem':
-				const response = await axios.put(
-					`http://localhost:4555/germanNouns/${item.id}`,
-					backendItem
-				);
-
-				break;
-		}
-		dispatchCore(action);
+    let backendItem = {};
+    if (item) {
+      backendItem = {
+        id: item.id,
+        article: item.article,
+        singular: item.singular,
+        plural: item.plural,
+      };
+    }
+    switch (action.type) {
+      case "saveItem":
+        const response = await axios.put(
+          `http://localhost:4555/germanNouns/${item.id}`,
+          backendItem
+        );
+        if ([200, 201].includes(response.status)) {
+          dispatchCore({ action });
+        } else {
+          dispatchCore({ type: "handleFailedSave", payload: { item } });
+        }
+      default:
+        dispatchCore(action);
+        break;
+    }
   };
 
   return (
