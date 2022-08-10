@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AppContext } from "./AppContext";
 import "./App.scss";
 import { GermanNounFormRow } from "./components/GermanNounFormRow";
+import { ItemButtonArea } from "./components/ItemButtonArea";
 
 function App() {
   const { state, dispatch } = useContext(AppContext);
@@ -47,22 +48,10 @@ function App() {
               <GermanNounFormRow item={item} label="Plural" variable="plural" />
 
               <div className="buttonRow">
-              <div className="message">{item.message}</div>
-								<div className="buttonArea">
-									<button
-										onClick={() =>
-											dispatch({
-												type: 'toggleEditStatus',
-												payload: item,
-											})
-										}
-									>
-										Edit
-									</button>
-									<button>Delete</button>
-									<button>Add</button>
-								</div>
-							</div>
+                <div className="message">{item.message}</div>
+
+                <ItemButtonArea dispatch={dispatch} item={item} />
+              </div>
             </fieldset>
           );
         })}
