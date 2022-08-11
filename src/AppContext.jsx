@@ -106,6 +106,17 @@ function reducer(state, action) {
         plural: "",
       };
       break;
+    case "addItem":
+      item = action.payload.item;
+
+      _state.germanNouns.push(item);
+      _state.isAdding = false;
+      _state.addItem = {
+        article: "",
+        singular: "",
+        plural: "",
+      };
+      break;
   }
   return _state;
 }
@@ -179,6 +190,36 @@ export const AppProvider = ({ children }) => {
           const response = await axios.delete(
             `${baseUrl}/germanNouns/${item.id}`
           );
+          if ([200, 201].includes(response.status)) {
+            dispatchCore(action);
+          } else {
+            dispatchCore({
+              type: "handleFailedSave",
+              payload: {
+                item,
+                message: `API Error: ${response.status}`,
+              },
+            });
+          }
+        } catch (err) {
+          dispatchCore({
+            type: "handleFailedSave",
+            payload: { item, message: `Error: ${err.message}` },
+          });
+        }
+        break;
+      case "addItem":
+        const addItem = {
+          article: item.article,
+          singular: item.singular,
+          plural: item.plural,
+        };
+        dispatchCore({
+          type: "turnOnProcessingStatus",
+          payload: { item: addItem },
+        });
+        try {
+          const response = await axios.post(`${baseUrl}/germanNouns`, addItem);
           if ([200, 201].includes(response.status)) {
             dispatchCore(action);
           } else {
