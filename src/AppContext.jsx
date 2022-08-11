@@ -71,12 +71,8 @@ function reducer(state, action) {
       originalItem = item.originalItem;
       message = action.payload.message;
 
-      item.isEditing = false;
       item.isProcessing = false;
       item.message = message;
-      item.article = originalItem.article;
-      item.singular = originalItem.singular;
-      item.plural = originalItem.plural;
       break;
     case "askIfSureForDelete":
       item = action.payload.item;
@@ -220,9 +216,11 @@ export const AppProvider = ({ children }) => {
         });
         try {
           const response = await axios.post(`${baseUrl}/germanNouns`, addItem);
-          console.log(response);
           if ([200, 201].includes(response.status)) {
-            dispatchCore({ type: "addItem", payload: { item: response.data } });
+            dispatchCore({
+              type: "addItem",
+              payload: { item: response.data },
+            });
           } else {
             dispatchCore({
               type: "handleFailedSave",
