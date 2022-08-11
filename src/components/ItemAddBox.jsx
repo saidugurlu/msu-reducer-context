@@ -1,54 +1,59 @@
-import { useContext } from 'react';
-import { AppContext } from '../AppContext';
-import { GermanNounFormRow } from './GermanNounFormRow';
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
+import { GermanNounFormRow } from "./GermanNounFormRow";
 
 export const ItemAddBox = () => {
-	const { state, dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
 
-	const item = state.addItem;
+  const item = state.addItem;
 
-	return (
-		<>
-			{state.isAdding && (
-				<fieldset className="germanNoun addItem">
-					<legend>Add New Item</legend>
-					<GermanNounFormRow
-						item={item}
-						label="Article"
-						variable="article"
-						isAdding={true}
-					/>
+  return (
+    <>
+      {state.isAdding && (
+        <fieldset className="germanNoun addItem">
+          <legend>Add New Item</legend>
+          <GermanNounFormRow
+            item={item}
+            label="Article"
+            variable="article"
+            isAdding={true}
+          />
 
-					<GermanNounFormRow
-						item={item}
-						label="Singular"
-						variable="singular"
-						isAdding={true}
-					/>
+          <GermanNounFormRow
+            item={item}
+            label="Singular"
+            variable="singular"
+            isAdding={true}
+          />
 
-					<GermanNounFormRow
-						item={item}
-						label="Plural"
-						variable="plural"
-						isAdding={true}
-					/>
+          <GermanNounFormRow
+            item={item}
+            label="Plural"
+            variable="plural"
+            isAdding={true}
+          />
 
-					<div className="buttonRow">
-						<div className="message">{item.message}</div>
+          <div className="buttonRow">
+            <div className="message">{item.message}</div>
 
-						<div className="buttonArea">
-							<button
-								onClick={() =>
-									dispatch({ type: 'clearAddBox' })
-								}
-							>
-								Clear
-							</button>
-							<button>Add Item</button>
-						</div>
-					</div>
-				</fieldset>
-			)}
-		</>
-	);
+            <div className="buttonArea">
+              <button onClick={() => dispatch({ type: "clearAddBox" })}>
+                Clear
+              </button>
+              <button
+                onClick={() =>
+                  dispatch({
+                    type: "addItem",
+                    payload: { item },
+                  })
+                }
+              >
+                Add Item
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      )}
+    </>
+  );
 };
