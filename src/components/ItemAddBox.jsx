@@ -1,7 +1,8 @@
-import React from 'react'
+import { useContext } from 'react';
+import { AppContext } from '../AppContext';
 
 export const ItemAddBox = () => {
-  return (
-    <div>ItemAddBox</div>
-  )
-}
+	const { state, dispatch } = useContext(AppContext);
+
+	return <>{state.isAdding && <div>adding item, component...</div>}</>;
+};
