@@ -139,6 +139,28 @@ export const AppProvider = ({ children }) => {
 					});
 				}
 				break;
+			case 'deleteItem':
+				try {
+					const response = await axios.delete(
+						`${baseUrl}/germanNouns/${item.id}`);
+					if ([200, 201].includes(response.status)) {
+						dispatchCore(action);
+					} else {
+						dispatchCore({
+							type: 'handleFailedSave',
+							payload: {
+								item,
+								message: `API Error: ${response.status}`,
+							},
+						});
+					}
+				} catch (err) {
+					dispatchCore({
+						type: 'handleFailedSave',
+						payload: { item, message: `Error: ${err.message}` },
+					});
+				}
+				break;
 			default:
 				dispatchCore(action);
 				break;
