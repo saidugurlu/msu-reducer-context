@@ -1,12 +1,12 @@
 export const ItemButtonArea = ({ item, dispatch }) => {
-	
 	const handleAddButtonClick = () => {
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth'
 		});
+		dispatch({type: 'turnAddingOn'})
 	}
-	
+
 	return (
 		<>
 			<div className="buttonArea">

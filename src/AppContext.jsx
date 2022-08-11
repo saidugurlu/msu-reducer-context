@@ -8,6 +8,7 @@ export const AppContext = createContext();
 const initialState = {
 	count: 0,
 	germanNouns: [],
+	isAdding: false,
 };
 
 function reducer(state, action) {
@@ -74,18 +75,23 @@ function reducer(state, action) {
 			break;
 		case 'askIfSureForDelete':
 			item = action.payload.item;
-			
+
 			item.isDeleting = true;
 			break;
 		case 'deleteItem':
 			item = action.payload.item;
-			
-			_state.germanNouns = [...state.germanNouns.filter(m => m.id !== item.id)];
+
+			_state.germanNouns = [
+				...state.germanNouns.filter((m) => m.id !== item.id),
+			];
 			break;
 		case 'turnOnProcessingStatus':
 			item = action.payload.item;
 
 			item.isProcessing = true;
+			break;
+		case 'turnAddingOn':
+			_state.isAdding = true;
 			break;
 	}
 	return _state;
@@ -96,9 +102,8 @@ export const AppProvider = ({ children }) => {
 
 	useEffect(() => {
 		(async () => {
-			const _germanNouns = (
-				await axios.get(`${baseUrl}/germanNouns`)
-			).data;
+			const _germanNouns = (await axios.get(`${baseUrl}/germanNouns`))
+				.data;
 			_germanNouns.forEach((item) => {
 				item.isEditing = false;
 				item.isDeleting = false;
@@ -106,7 +111,10 @@ export const AppProvider = ({ children }) => {
 				item.message = '';
 				item.originalItem = { ...item };
 			});
-			dispatchCore({ type: 'loadGermanNouns', payload: { germanNouns: _germanNouns } });
+			dispatchCore({
+				type: 'loadGermanNouns',
+				payload: { germanNouns: _germanNouns },
+			});
 		})();
 	}, []);
 
@@ -123,6 +131,10 @@ export const AppProvider = ({ children }) => {
 		}
 		switch (action.type) {
 			case 'saveItem':
+				dispatchCore({
+					type: 'turnOnProcessingStatus',
+					payload: { item },
+				});
 				try {
 					const response = await axios.put(
 						`${baseUrl}/germanNouns/${item.id}`,
@@ -147,10 +159,14 @@ export const AppProvider = ({ children }) => {
 				}
 				break;
 			case 'deleteItem':
-				dispatchCore({type:'turnOnProcessingStatus', payload: {item}})
+				dispatchCore({
+					type: 'turnOnProcessingStatus',
+					payload: { item },
+				});
 				try {
 					const response = await axios.delete(
-						`${baseUrl}/germanNouns/${item.id}`);
+						`${baseUrl}/germanNouns/${item.id}`
+					);
 					if ([200, 201].includes(response.status)) {
 						dispatchCore(action);
 					} else {
