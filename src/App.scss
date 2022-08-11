@@ -36,8 +36,18 @@ body {
   }
 
   .germanNounArea {
-    fieldset.germanNoun {
+		fieldset.addItem {
+			background: rgb(91, 116, 118);
+		}
+
+		fieldset.editItem {
       background-color: rgb(69, 73, 105);
+		}
+
+
+
+    fieldset.germanNoun {
+    
       margin-bottom: 1rem;
       padding: 1rem;
       border: 1px solid #666;

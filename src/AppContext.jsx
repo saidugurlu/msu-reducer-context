@@ -9,6 +9,11 @@ const initialState = {
 	count: 0,
 	germanNouns: [],
 	isAdding: false,
+	addItem: {
+		article: '',
+		singular: '',
+		plural: ''
+	}
 };
 
 function reducer(state, action) {
