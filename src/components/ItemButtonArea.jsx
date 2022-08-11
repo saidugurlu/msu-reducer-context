@@ -1,4 +1,12 @@
 export const ItemButtonArea = ({ item, dispatch }) => {
+	
+	const handleAddButtonClick = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	}
+	
 	return (
 		<>
 			<div className="buttonArea">
@@ -28,6 +36,7 @@ export const ItemButtonArea = ({ item, dispatch }) => {
 						</button>
 						<button
 							disabled={item.isProcessing}
+							onClick={handleAddButtonClick}
 						>Add</button>
 					</>
 				)}
