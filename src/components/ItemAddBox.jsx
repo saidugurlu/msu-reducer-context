@@ -16,25 +16,34 @@ export const ItemAddBox = () => {
 						item={item}
 						label="Article"
 						variable="article"
+						isAdding={true}
 					/>
 
 					<GermanNounFormRow
 						item={item}
 						label="Singular"
 						variable="singular"
+						isAdding={true}
 					/>
 
 					<GermanNounFormRow
 						item={item}
 						label="Plural"
 						variable="plural"
+						isAdding={true}
 					/>
 
 					<div className="buttonRow">
 						<div className="message">{item.message}</div>
 
 						<div className="buttonArea">
-							<button>Clear</button>
+							<button
+								onClick={() =>
+									dispatch({ type: 'clearAddBox' })
+								}
+							>
+								Clear
+							</button>
 							<button>Add Item</button>
 						</div>
 					</div>
